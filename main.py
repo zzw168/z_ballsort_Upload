@@ -7,6 +7,7 @@ import webbrowser
 
 import cv2
 import numpy as np
+import yaml
 from PySide6.QtCore import Slot, QThread, Signal, QTimer, Qt
 from PySide6.QtGui import QIcon, QPixmap, QColor, QPainter, QBrush, QFont, QMouseEvent
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QLabel, QVBoxLayout
@@ -298,6 +299,7 @@ def deal_rank(integration_qiu_array):
                         ranking_array[r_index][8] += 1
                         if ranking_array[r_index][8] > max_lap_count - 1:
                             ranking_array[r_index][8] = 0
+                            ranking_array[r_index][6] = 0
                 if (ranking_array[0][6] >= max_area_count - balls_count
                         and ranking_array[0][8] >= max_lap_count - 1):
                     area_limit = balls_count
@@ -525,15 +527,46 @@ def filter_max_value(lists):  # 在区域范围内如果出现两个相同的球
 
 "************************************图像识别_结束****************************************"
 
+
 def open_draw():
     url = 'https://zzw168.github.io/LabelImg/'
     webbrowser.open(url)
 
+
 def json_txt():
     if json_to_txt():
-        ui.textBrowser_background_data.append(succeed('区域文件转TXT成功！'))
+        ui.textBrowser.append(succeed('区域文件转TXT成功！'))
     else:
-        ui.textBrowser_background_data.append(fail('区域文件转TXT失败！'))
+        ui.textBrowser.append(fail('区域文件转TXT失败！'))
+
+def save_ballsort_yaml():
+    global max_lap_count
+    global max_area_count
+    file = "./ballsort_config.yml"
+    if os.path.exists(file):
+        f = open(file, 'r', encoding='utf-8')
+        ballsort_all = yaml.safe_load(f)
+        f.close()
+        if (ui.lineEdit_lap_Ranking.text().isdigit()
+                and ui.lineEdit_area_Ranking.text().isdigit()
+                and ui.lineEdit_Time_Restart_Ranking.text().isdigit()):
+            ballsort_all['max_lap_count'] = int(ui.lineEdit_lap_Ranking.text())
+            ballsort_all['max_area_count'] = int(ui.lineEdit_area_Ranking.text())
+            ballsort_all['reset_time'] = int(ui.lineEdit_Time_Restart_Ranking.text())
+            ballsort_all['time_send_result'] = int(ui.lineEdit_time_send_result.text())
+            ballsort_all['time_count_ball'] = int(ui.lineEdit_time_count_ball.text())
+            max_lap_count = int(ui.lineEdit_lap_Ranking.text())
+            max_area_count = int(ui.lineEdit_area_Ranking.text())
+            # print(ballsort_conf)
+            with open(file, "w", encoding="utf-8") as f:
+                yaml.dump(ballsort_all, f, allow_unicode=True)
+            f.close()
+            ui.textBrowser_background_data.setText(
+                succeed("%s,%s,%s 保存服务器完成" % (ballsort_all['max_lap_count'],
+                                                     ballsort_all['max_area_count'],
+                                                     ballsort_all['reset_time'])))
+        else:
+            ui.textBrowser_background_data.setText(fail("错误，只能输入数字！"))
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -546,6 +579,7 @@ if __name__ == '__main__':
 
     ui.pushButton_Draw.clicked.connect(open_draw)
     ui.pushButton_to_TXT.clicked.connect(json_txt)
+    ui.pushButton_save_Ranking.clicked.connect(save_ballsort_yaml)
 
     "**************************图像识别算法_开始*****************************"
     # set_run_toggle 发送请求运行数据
