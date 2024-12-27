@@ -3,6 +3,7 @@ import json
 import os
 import socket
 import sys
+import webbrowser
 
 import cv2
 import numpy as np
@@ -11,7 +12,8 @@ from PySide6.QtGui import QIcon, QPixmap, QColor, QPainter, QBrush, QFont, QMous
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QLabel, QVBoxLayout
 
 from MainCtl_Ui import Ui_MainWindow
-from unit.tool_unit import fail, divide_path
+from unit.tool_unit import fail, divide_path, succeed
+from unit.z_json2txt import json_to_txt
 
 
 class z_App(QApplication):
@@ -523,6 +525,16 @@ def filter_max_value(lists):  # 在区域范围内如果出现两个相同的球
 
 "************************************图像识别_结束****************************************"
 
+def open_draw():
+    url = 'https://zzw168.github.io/LabelImg/'
+    webbrowser.open(url)
+
+def json_txt():
+    if json_to_txt():
+        ui.textBrowser_background_data.append(succeed('区域文件转TXT成功！'))
+    else:
+        ui.textBrowser_background_data.append(fail('区域文件转TXT失败！'))
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     app = z_App(sys.argv)
@@ -531,6 +543,9 @@ if __name__ == '__main__':
     ui = z_Ui()
     ui.setupUi(z_window)
     z_window.show()
+
+    ui.pushButton_Draw.clicked.connect(open_draw)
+    ui.pushButton_to_TXT.clicked.connect(json_txt)
 
     "**************************图像识别算法_开始*****************************"
     # set_run_toggle 发送请求运行数据
