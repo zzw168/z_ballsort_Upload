@@ -37,14 +37,14 @@ class z_App(QApplication):
     def stop_all_threads(self):
         """停止所有线程的函数。"""
         try:
-            pass
+            udp_thread.stop()
         except Exception as e:
             print(f"Error stopping threads: {e}")
 
     def join_all_threads(self):
         """等待所有线程退出。"""
         try:
-            pass
+            udp_thread.wait()
         except Exception as e:
             print(f"Error waiting threads: {e}")
 
@@ -547,7 +547,7 @@ if __name__ == '__main__':
 
     # 初始化数据
     max_lap_count = 1  # 最大圈
-    max_area_count = 49  # 统计一圈的位置差
+    max_area_count = 87  # 统计一圈的位置差
     init_array = [
         [0, 0, 0, 0, 0, 'yellow', 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 'blue', 0, 0, 0, 0],
