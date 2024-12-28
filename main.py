@@ -87,7 +87,7 @@ class z_Ui(QMainWindow, Ui_MainWindow):
 
 
 class MapLabel(QLabel):
-    def __init__(self, picture_size=860, ball_space=11, ball_radius=10, flash_time=30, step_length=2, parent=None):
+    def __init__(self, picture_size=860, ball_space=10, ball_radius=10, flash_time=30, step_length=2, parent=None):
         super().__init__(parent)
         self.map_action = 0  # 地图触发点位
         img = map_data[0]
@@ -142,10 +142,10 @@ class MapLabel(QLabel):
                 color = self.color_names[ranking_array[num][5]]
                 if ranking_array[num][6] == 0:  # 起点
                     if p_num == 0:
-                        index = len(ranking_array) * self.ball_space
+                        index = (len(ranking_array)-1) * self.ball_space
                     else:
-                        index = len(ranking_array) * self.ball_space - p_num * self.ball_space
-                elif (ranking_array[num][6] >= max_area_count - balls_count + 1
+                        index = (len(ranking_array)-1) * self.ball_space - p_num * self.ball_space
+                elif (ranking_array[num][6] >= max_area_count - balls_count
                       and ranking_array[num][8] >= max_lap_count - 1):  # 最后一圈处理
                     if p_num == 0:
                         index = len(self.path_points) - 1
@@ -212,7 +212,7 @@ class MapLabel(QLabel):
 
         if ui.checkBox_show_orbit.isChecked():  # 绘制路径
             for index in range(len(self.path_points)):
-                part = len(self.path_points) / (max_area_count - balls_count + 1)
+                part = len(self.path_points) / (max_area_count - balls_count)
                 if index % int(part) == 0:
                     painter.setBrush(QBrush(QColor(255, 0, 0), Qt.SolidPattern))
                     font = QFont("Arial", 12, QFont.Bold)  # 字体：Arial，大小：16，加粗
@@ -565,7 +565,7 @@ def save_ballsort_yaml():
             ui.textBrowser.setText(
                 succeed("%s,%s,%s 保存服务器完成" % (ballsort_all['max_lap_count'],
                                                      ballsort_all['max_area_count'],
-                                                     ballsort_all['reset_time'])))
+                                                     ballsort_all['flash_time'])))
         else:
             ui.textBrowser.setText(fail("错误，只能输入数字！"))
 
@@ -620,6 +620,9 @@ if __name__ == '__main__':
     max_lap_count = 1  # 最大圈
     max_area_count = 87  # 统计一圈的位置差
     flash_t = 30
+
+    load_ballsort_yaml()
+
     init_array = [
         [0, 0, 0, 0, 0, 'yellow', 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 'blue', 0, 0, 0, 0],
