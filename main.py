@@ -539,9 +539,11 @@ def json_txt():
     else:
         ui.textBrowser.append(fail('区域文件转TXT失败！'))
 
+
 def save_ballsort_yaml():
     global max_lap_count
     global max_area_count
+    global flash_t
     file = "./ballsort_config.yml"
     if os.path.exists(file):
         f = open(file, 'r', encoding='utf-8')
@@ -549,24 +551,24 @@ def save_ballsort_yaml():
         f.close()
         if (ui.lineEdit_lap_Ranking.text().isdigit()
                 and ui.lineEdit_area_Ranking.text().isdigit()
-                and ui.lineEdit_Time_Restart_Ranking.text().isdigit()):
+                and ui.lineEdit_flash_Ranking.text().isdigit()):
             ballsort_all['max_lap_count'] = int(ui.lineEdit_lap_Ranking.text())
             ballsort_all['max_area_count'] = int(ui.lineEdit_area_Ranking.text())
-            ballsort_all['reset_time'] = int(ui.lineEdit_Time_Restart_Ranking.text())
-            ballsort_all['time_send_result'] = int(ui.lineEdit_time_send_result.text())
-            ballsort_all['time_count_ball'] = int(ui.lineEdit_time_count_ball.text())
+            ballsort_all['flash_time'] = int(ui.lineEdit_flash_Ranking.text())
             max_lap_count = int(ui.lineEdit_lap_Ranking.text())
             max_area_count = int(ui.lineEdit_area_Ranking.text())
+            flash_t = int(ui.lineEdit_flash_Ranking.text())
             # print(ballsort_conf)
             with open(file, "w", encoding="utf-8") as f:
                 yaml.dump(ballsort_all, f, allow_unicode=True)
             f.close()
-            ui.textBrowser_background_data.setText(
+            ui.textBrowser.setText(
                 succeed("%s,%s,%s 保存服务器完成" % (ballsort_all['max_lap_count'],
                                                      ballsort_all['max_area_count'],
                                                      ballsort_all['reset_time'])))
         else:
-            ui.textBrowser_background_data.setText(fail("错误，只能输入数字！"))
+            ui.textBrowser.setText(fail("错误，只能输入数字！"))
+
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -597,6 +599,7 @@ if __name__ == '__main__':
     # 初始化数据
     max_lap_count = 1  # 最大圈
     max_area_count = 87  # 统计一圈的位置差
+    flash_t = 30
     init_array = [
         [0, 0, 0, 0, 0, 'yellow', 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 'blue', 0, 0, 0, 0],
@@ -638,7 +641,7 @@ if __name__ == '__main__':
 
     "**************************地图_开始*****************************"
     map_data = ['./img/09_沙漠.jpg', './img/09_沙漠.json', '860']  # 卫星地图资料
-    map_label_big = MapLabel()
+    map_label_big = MapLabel(flash_time=flash_t)
     layout_big = QVBoxLayout(ui.widget_map_big)
     layout_big.setContentsMargins(0, 0, 0, 0)
     layout_big.setAlignment(Qt.AlignmentFlag.AlignCenter)

@@ -211,7 +211,7 @@
                    </size>
                   </property>
                   <property name="text">
-                   <string>重置圈数:</string>
+                   <string>最大圈数:</string>
                   </property>
                  </widget>
                 </item>
@@ -224,7 +224,7 @@
                    </size>
                   </property>
                   <property name="text">
-                   <string>循环时间:</string>
+                   <string>追踪速度(ms):</string>
                   </property>
                  </widget>
                 </item>
@@ -268,7 +268,7 @@
                  </widget>
                 </item>
                 <item row="2" column="1" colspan="2">
-                 <widget class="QLineEdit" name="lineEdit_Time_Restart_Ranking">
+                 <widget class="QLineEdit" name="lineEdit_flash_Ranking">
                   <property name="minimumSize">
                    <size>
                     <width>0</width>

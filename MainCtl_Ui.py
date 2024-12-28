@@ -137,11 +137,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_32.addWidget(self.lineEdit_area_Ranking, 1, 1, 1, 2)
 
-        self.lineEdit_Time_Restart_Ranking = QLineEdit(self.groupBox_13)
-        self.lineEdit_Time_Restart_Ranking.setObjectName(u"lineEdit_Time_Restart_Ranking")
-        self.lineEdit_Time_Restart_Ranking.setMinimumSize(QSize(0, 10))
+        self.lineEdit_flash_Ranking = QLineEdit(self.groupBox_13)
+        self.lineEdit_flash_Ranking.setObjectName(u"lineEdit_flash_Ranking")
+        self.lineEdit_flash_Ranking.setMinimumSize(QSize(0, 10))
 
-        self.gridLayout_32.addWidget(self.lineEdit_Time_Restart_Ranking, 2, 1, 1, 2)
+        self.gridLayout_32.addWidget(self.lineEdit_flash_Ranking, 2, 1, 1, 2)
 
         self.pushButton_save_Ranking = QPushButton(self.groupBox_13)
         self.pushButton_save_Ranking.setObjectName(u"pushButton_save_Ranking")
@@ -184,8 +184,8 @@ class Ui_MainWindow(object):
         self.pushButton_Draw.setText(QCoreApplication.translate("MainWindow", u"\u753b\u56fe\u5de5\u5177", None))
         self.pushButton_to_TXT.setText(QCoreApplication.translate("MainWindow", u"\u8f6c\u6362TXT", None))
         self.groupBox_13.setTitle(QCoreApplication.translate("MainWindow", u"\u6392\u540d\u53c2\u6570\u8bbe\u7f6e", None))
-        self.label_19.setText(QCoreApplication.translate("MainWindow", u"\u91cd\u7f6e\u5708\u6570:", None))
-        self.label_17.setText(QCoreApplication.translate("MainWindow", u"\u5faa\u73af\u65f6\u95f4:", None))
+        self.label_19.setText(QCoreApplication.translate("MainWindow", u"\u6700\u5927\u5708\u6570:", None))
+        self.label_17.setText(QCoreApplication.translate("MainWindow", u"\u8ffd\u8e2a\u901f\u5ea6(ms):", None))
 #if QT_CONFIG(tooltip)
         self.lineEdit_lap_Ranking.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\u8bbe\u7f6e\u6700\u5927\u5708\u6570</p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
@@ -194,7 +194,7 @@ class Ui_MainWindow(object):
         self.lineEdit_area_Ranking.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\u8bbe\u7f6e\u6700\u5927\u533a\u57df\u6570</p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(tooltip)
-        self.lineEdit_Time_Restart_Ranking.setToolTip("")
+        self.lineEdit_flash_Ranking.setToolTip("")
 #endif // QT_CONFIG(tooltip)
         self.pushButton_save_Ranking.setText(QCoreApplication.translate("MainWindow", u"\u4fdd\u5b58", None))
         self.checkBox_show_orbit.setText(QCoreApplication.translate("MainWindow", u"\u663e\u793a\u8f68\u8ff9", None))
