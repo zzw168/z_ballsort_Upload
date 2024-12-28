@@ -569,6 +569,26 @@ def save_ballsort_yaml():
         else:
             ui.textBrowser.setText(fail("错误，只能输入数字！"))
 
+def load_ballsort_yaml():
+    global max_lap_count
+    global max_area_count
+    global flash_t
+    file = "./ballsort_config.yml"
+    if os.path.exists(file):
+        f = open(file, 'r', encoding='utf-8')
+        ballsort_all = yaml.safe_load(f)
+        max_area_count = int(ballsort_all['max_area_count'])
+        max_lap_count = int(ballsort_all['max_lap_count'])
+        flash_t = int(ballsort_all['flash_time'])
+
+        ui.lineEdit_flash_Ranking.setText(str(flash_t))
+        ui.lineEdit_lap_Ranking.setText(str(max_lap_count))
+        ui.lineEdit_area_Ranking.setText(str(max_area_count))
+
+        f.close()
+    else:
+        print("文件不存在")
+
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
